@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'http://localhost:3000', // <-- Update this from 5000 to 3000
+  baseURL: 'https://social-media-backend-flax-psi.vercel.app', // Your live Vercel backend URL
   withCredentials: true, 
 });
 
