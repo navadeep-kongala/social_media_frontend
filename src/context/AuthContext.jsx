@@ -17,20 +17,21 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
   const res = await API.post('/api/v1/auth/login', { email, password });
-  const token = res.data.token;
-  localStorage.setItem('token', token);
-  setUser(res.data.user || res.data);
-  };
+  localStorage.setItem('token', res.data.token);
+  setUser(res.data.data);
+};
 
-  const register = async (username, email, password) => {
-    await API.post('/api/v1/auth/register', { username, email, password });
-  };
+const register = async (username, email, password) => {
+  const res = await API.post('/api/v1/auth/register', { username, email, password });
+  localStorage.setItem('token', res.data.token);
+  setUser(res.data.data);
+};
 
-  const logout = async () => {
+const logout = async () => {
   await API.post('/api/v1/auth/logout');
   localStorage.removeItem('token');
   setUser(null);
-  };
+};
 
   return (
     <AuthContext.Provider value={{ user, loading, login, register, logout }}>
