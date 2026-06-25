@@ -16,8 +16,10 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await API.post('/api/v1/auth/login', { email, password });
-    setUser(res.data.user || res.data);
+  const res = await API.post('/api/v1/auth/login', { email, password });
+  const token = res.data.token;
+  localStorage.setItem('token', token);
+  setUser(res.data.user || res.data);
   };
 
   const register = async (username, email, password) => {
@@ -25,8 +27,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await API.post('/api/v1/auth/logout');
-    setUser(null);
+  await API.post('/api/v1/auth/logout');
+  localStorage.removeItem('token');
+  setUser(null);
   };
 
   return (
