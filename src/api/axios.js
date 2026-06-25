@@ -1,8 +1,17 @@
 import axios from 'axios';
 
 const API = axios.create({
-  baseURL: 'https://social-media-backend-flax-psi.vercel.app', // Your live Vercel backend URL
-  withCredentials: true, 
+  baseURL: 'https://social-media-backend-flax-psi.vercel.app',
+  withCredentials: true,
+});
+
+// Attach token to every request automatically
+API.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
 });
 
 export default API;
